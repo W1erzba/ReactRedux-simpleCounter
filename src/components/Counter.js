@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-// Default Redux hook allowing us select a part of our state menaged by the store.
+import { counterActions } from '../store/index';
 
 import classes from './Counter.module.css';
 
@@ -9,19 +9,19 @@ const Counter = () => {
 	const show = useSelector((state) => state.showCounter);
 
 	const incrementHandler = () => {
-		dispatch({ type: 'increment' });
+		dispatch(counterActions.increment());
 	};
 
 	const decrementHandler = () => {
-		dispatch({ type: 'decrement' });
+		dispatch(counterActions.decrement());
 	};
 
 	const increaseHandler = () => {
-		dispatch({ type: 'increase', amount: 10 });
+		dispatch(counterActions.increase(5)); // {type: SOME_UNIQUE_IDENTIFIER, payload: 10}
 	};
 
 	const toggleCounterHandler = () => {
-		dispatch({ type: 'toggle' });
+		dispatch(counterActions.toggleCounter());
 	};
 
 	return (
@@ -39,53 +39,3 @@ const Counter = () => {
 };
 
 export default Counter;
-
-/*
-TODO: Class based components version TODO:
-
-import { Component } from 'react';
-import { connect } from 'react-redux';
-for classbassed component we have to use 'connect' hook from redux.
-
-class Counter extends Component {
-	// constructor() - no state here so do not needed
-	incrementHandler() {
-		this.props.increment();
-	}
-
-	decrementHandler() {
-		this.props.decrement();
-	}
-
-	toggleCounterHandler() {}
-
-	render() {
-		return (
-			<main className={classes.counter}>
-				<h1>Redux Counter</h1>
-				<div className={classes.value}>{this.props.counter}</div>
-				<div>
-					<button onClick={this.incrementHandler.bind(this)}>Increment</button>
-					<button onClick={this.decrementHandler.bind(this)}>Decrement</button>
-				</div>
-				<button onClick={this.toggleCounterHandler}>Toggle Counter</button>
-			</main>
-		);
-	}
-}
-
-const mapStateToProps = (state) => {
-	return {
-		counter: state.counter,
-	};
-};
-
-const mapDispatchToProps = (dispatch) => {
-	return {
-		increment: () => dispatch({ type: 'increment' }),
-		decrement: () => dispatch({ type: 'decrement' }),
-	};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Counter); // connect is higherOrder componentm and there we have function with has to have argument also so there we are giving a Counter as a seccond argument and mapStateToProps as seccond also with subArgument with is mapDispatchToProps with is an class version of dispatch from store....
-*/
